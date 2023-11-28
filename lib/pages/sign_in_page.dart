@@ -18,7 +18,6 @@ class _SignInState extends State<SignIn> {
   AuthenticationMethods authenticationMethods = AuthenticationMethods();
   //sign in
   void signIn() async {
-    
     String output = await authenticationMethods.signIn(
         email: emailController.text, password: pwdController.text);
     if (output == "success") {
@@ -27,7 +26,6 @@ class _SignInState extends State<SignIn> {
           context, MaterialPageRoute(builder: (context) => MovieHome()));
     } else {
       print(output);
-      
     }
   }
 
