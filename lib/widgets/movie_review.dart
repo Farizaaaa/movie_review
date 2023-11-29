@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movie_review/models/movie_details_model/movie_details_model.dart';
 
 class MovieReview extends StatelessWidget {
-  const MovieReview({super.key});
+  //also
+  final MovieDetailsModel movieDetailsModel;
+  //it is easy we only require one
+
+  const MovieReview({super.key, required this.movieDetailsModel, r});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,8 @@ class MovieReview extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Image.network(
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Cstm6OmgohpjAXqQfpPepVhWD1kxeHzuUg&usqp=CAU",
+              "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg",
+              //movieDetailsModel.movieUrl!,
               fit: BoxFit.cover,
             ),
           ),
@@ -28,26 +34,44 @@ class MovieReview extends StatelessWidget {
             width: screenSize.width / 17.5,
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: screenSize.height / 70,
               ),
               Text(
-                "Movie name",
+                movieDetailsModel.movieName!,
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 24),
               ),
               SizedBox(
                 height: screenSize.height / 70,
               ),
-              Text(
-                "Movie reviewwwww",
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor, fontSize: 12),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  movieDetailsModel.movieReview!,
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 12),
+                ),
+              ),
+              SizedBox(
+                height: screenSize.height / 70,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 11.0),
+                child: Text(
+                  "like",
+                  // "$movieDetailsModel.like",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 12),
+                ),
               ),
             ],
           )
         ]),
+
         // child: ListTile(
         //   tileColor: Theme.of(context).primaryColorLight,
         //   contentPadding: const EdgeInsets.all(12.0),

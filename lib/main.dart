@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_review/firebase_options.dart';
-import 'package:movie_review/pages/sign_in_page.dart';
+import 'package:movie_review/pages/page_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +17,7 @@ class MovieApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.brown),
-      home: SignIn(),
+      home: PageLayout(),
     );
   }
 }
