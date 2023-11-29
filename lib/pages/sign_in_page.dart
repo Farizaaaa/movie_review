@@ -6,7 +6,8 @@ import 'package:movie_review/widgets/my_button.dart';
 import 'package:movie_review/widgets/my_text_field.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  Function()? onTap;
+   SignIn({super.key,required this.onTap});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -28,6 +29,8 @@ class _SignInState extends State<SignIn> {
       print(output);
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class _SignInState extends State<SignIn> {
               SizedBox(
                 height: size.height / 35,
               ),
-              MyButton(onTap: signIn, text: "Sign In"),
+              MyButton(onTap: signIn, text: "Sign In",height: size.height/10,width: size.width/1.2,),
               SizedBox(
                 height: size.height / 35,
               ),
@@ -69,10 +72,7 @@ class _SignInState extends State<SignIn> {
                       "SignUp",
                       style: TextStyle(color: Colors.blue),
                     ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SignUp()));
-                    },
+                    onPressed: widget.onTap,
                   )
                 ],
               )

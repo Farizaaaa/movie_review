@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_review/models/movie_details_model/movie_details_model.dart';
 import 'package:movie_review/models/user_details_model/user_details_model.dart';
+import 'package:movie_review/pages/page_layout.dart';
 import 'package:movie_review/pages/sign_in_page.dart';
 import 'package:movie_review/resources/cloud_firestore_methods.dart';
+import 'package:movie_review/widgets/dialog_box.dart';
 import 'package:movie_review/widgets/movie_review.dart';
 
 class MovieHome extends StatefulWidget {
+  
   MovieHome({super.key});
 
   @override
@@ -16,7 +21,9 @@ class _MovieHomeState extends State<MovieHome> {
   final user = FirebaseAuth.instance.currentUser!;
   UserDetailsModel userDetailsModel = UserDetailsModel();
   CloudFirestoreMethods cloudFirestoreMethods = CloudFirestoreMethods();
-
+  MovieDetailsModel movieDetailsModel = MovieDetailsModel();
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  int? length;
   String name = "Name";
 
   @override
@@ -24,8 +31,10 @@ class _MovieHomeState extends State<MovieHome> {
     super.initState();
     // TODO: implement initState
     getData();
+    //getMovie();
   }
 
+  //getting data from cloudfirestore
   Future getData() async {
     userDetailsModel = await CloudFirestoreMethods().getName();
     setState(() {
@@ -34,10 +43,39 @@ class _MovieHomeState extends State<MovieHome> {
     print(userDetailsModel.name);
   }
 
-  //data list
-  final List movieReview = [
-    {"name": "SuraraiPottru", "review": "Nice film"}
-  ];
+  //add new review
+  void addNewReview() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+             
+              onCancel: () {
+                Navigator.pop(context);
+              });
+        });
+  }
+
+  //saveMovie{
+  
+
+  // //getting movie data
+  // void getMovie() async {
+  //   // Stream<QuerySnapshot<Map<String, dynamic>>> snap =
+  //   //     await cloudFirestoreMethods.getMovie();
+  //   int length = await cloudFirestoreMethods.getMovieDetailsLength();
+  //   setState(() {
+  //     //movieDetailsModel = getMovie;
+  //     length = length;
+  //   });
+  // }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +91,7 @@ class _MovieHomeState extends State<MovieHome> {
               onPressed: () {
                 FirebaseAuth.instance.signOut();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SignIn()));
+                    MaterialPageRoute(builder: (context) => const PageLayout()));
               },
               icon: const Icon(Icons.logout))
         ],
@@ -70,18 +108,35 @@ class _MovieHomeState extends State<MovieHome> {
             child: Text(name),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return const MovieReview();
-              },
-            ),
+            child: FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(firebaseAuth.currentUser!.uid)
+                    .collection("movies")
+                    .get(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return Container();
+                  } else {
+                    return ListView.builder(
+                      itemCount: snap.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        MovieDetailsModel movieDetailsModel =
+                            MovieDetailsModel.fromJson(
+                                snap.data!.docs[index].data());
+                        return MovieReview(
+                            movieDetailsModel: movieDetailsModel);
+                      },
+                    );
+                  }
+                }),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: addNewReview,
       ),
     );
   }

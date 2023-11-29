@@ -35,7 +35,7 @@ class AuthenticationMethods {
       required email,
       required password,
       required cpassword}) async {
-    String output = "Something went wrong";
+    String output = "Something went wrong while registering";
     name.trim();
     email.trim();
     password.trim();

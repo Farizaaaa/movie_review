@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 class MyButton extends StatelessWidget {
   final Function()? onTap;
   final String text;
-  MyButton({super.key, required this.onTap, required this.text});
+  final double width;
+
+  final double height;
+  MyButton(
+      {super.key,
+      required this.onTap,
+      required this.text,
+      required this.height,
+      required this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +19,17 @@ class MyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: screenSize.height / 10,
-        padding: EdgeInsets.all(24),
-        margin: EdgeInsets.symmetric(horizontal: 25),
+        height: height,
+        width: width,
+        padding: EdgeInsets.all(14),
+        margin: EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(20)),
+            color: Colors.brown[300], borderRadius: BorderRadius.circular(20)),
         child: Center(
             child: Text(
           text, // ignore: prefer_const_constructors
           style: TextStyle(
-              color: Theme.of(context).colorScheme.inversePrimary,
+              color: Theme.of(context).primaryColorLight,
               fontWeight: FontWeight.bold,
               fontSize: 16),
         )),

@@ -5,7 +5,8 @@ import 'package:movie_review/widgets/my_button.dart';
 import 'package:movie_review/widgets/my_text_field.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  Function()? onTap;
+   SignUp({super.key,required this.onTap});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -28,7 +29,7 @@ class _SignUpState extends State<SignUp> {
     if (output == "success") {
       print(output);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SignIn()));
+          context, MaterialPageRoute(builder: (context) => SignIn(onTap: widget.onTap,)));
     } else {
       print(output);
     }
@@ -75,7 +76,15 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: size.height / 35,
               ),
-              MyButton(onTap: signUp, text: "Sign Up")
+              MyButton(onTap: signUp, text: "Sign Up",height: size.height/10,width: size.width/1.2,),
+              
+              TextButton(
+                    child: Text(
+                      "SignUp",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                    onPressed: widget.onTap,
+                  )
             ],
           ),
         ),
