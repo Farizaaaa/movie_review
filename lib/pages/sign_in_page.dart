@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movie_review/pages/home_page.dart';
-import 'package:movie_review/pages/sign_up_page.dart';
 import 'package:movie_review/resources/authentication_methods.dart';
 import 'package:movie_review/widgets/my_button.dart';
 import 'package:movie_review/widgets/my_text_field.dart';
 
 class SignIn extends StatefulWidget {
-  Function()? onTap;
+  final Function()? onTap;
    SignIn({super.key,required this.onTap});
 
   @override

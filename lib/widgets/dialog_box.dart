@@ -56,25 +56,60 @@ class _DialogBoxState extends State<DialogBox> {
           width: screenSize.width / 1.5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyTextField(
                 controller: nameController,
                 text: "Enter the movie name",
                 line: 1,
               ),
-              Stack(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  img == null ? Icon(Icons.file_upload) : Image.memory(img!),
-                  IconButton(
-                      onPressed: () async {
-                        Uint8List? temp = await Utils().pickImage();
-                        if (temp != null) {
-                          setState(() {
-                            img = temp;
-                          });
-                        }
-                      },
-                      icon: Icon(Icons.file_upload))
+                  Text(
+                    "Upload Movie Image:",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColorLight,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Stack(
+                    children: [
+                      img == null
+                          ? Container()
+                          : Container(
+                              height: 90,
+                              width: 100,
+                              child: Image.memory(
+                                img!,
+                                fit: BoxFit.cover,
+                              )),
+                      CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColorLight,
+                        child: IconButton(
+                            onPressed: () async {
+                              Uint8List? temp = await Utils().pickImage();
+                              if (temp != null) {
+                                setState(() {
+                                  img = temp;
+                                });
+                              }
+                            },
+                            icon: Icon(
+                              Icons.file_upload,
+
+                              shadows: [
+                                BoxShadow(
+                                    color: Theme.of(context).primaryColorLight)
+                              ],
+                              //color: Theme.of(context).primaryColorLight,
+                            )),
+                      )
+                    ],
+                  ),
                 ],
               ),
               MyTextField(
