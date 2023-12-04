@@ -5,7 +5,7 @@ import 'package:movie_review/widgets/my_button.dart';
 import 'package:movie_review/widgets/my_text_field.dart';
 
 class SignUp extends StatefulWidget {
-  Function()? onTap;
+  final Function()? onTap;
    SignUp({super.key,required this.onTap});
 
   @override

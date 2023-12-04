@@ -19,6 +19,7 @@ class CloudFirestoreMethods {
         .doc(firebaseAuth.currentUser!.uid)
         .set(name.toJson());
   }
+ 
 
   Future getName() async {
     DocumentSnapshot snap = await firebaseFirestore
@@ -77,6 +78,7 @@ class CloudFirestoreMethods {
     print(task.ref.getDownloadURL());
     return task.ref.getDownloadURL();
   }
+  
 
 //   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getMovie() async {
 
