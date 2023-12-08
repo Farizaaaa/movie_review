@@ -75,7 +75,7 @@ class CloudFirestoreMethods {
         FirebaseStorage.instance.ref().child("users").child(uid);
     UploadTask uploadTask = storageRef.putData(image);
     TaskSnapshot task = await uploadTask;
-    print(task.ref.getDownloadURL());
+    //print(task.ref.getDownloadURL());
     return task.ref.getDownloadURL();
   }
   
