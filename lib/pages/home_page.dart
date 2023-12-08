@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_review/models/movie_details_model/movie_details_model.dart';
 import 'package:movie_review/models/user_details_model/user_details_model.dart';
+import 'package:movie_review/provider/user_details_provider.dart';
 import 'package:movie_review/resources/cloud_firestore_methods.dart';
 import 'package:movie_review/widgets/dialog_box.dart';
 import 'package:movie_review/widgets/movie_review.dart';
 import 'package:movie_review/widgets/search_bar_widget.dart';
+import 'package:provider/provider.dart';
 
 class MovieHome extends StatefulWidget {
   const MovieHome({super.key});
@@ -81,6 +83,9 @@ class _MovieHomeState extends State<MovieHome> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    UserDetailsModel? userDetailsModell =
+        Provider.of<UserDetailsProvider>(context, listen: false)
+            .userDetailsModel!;
     return Scaffold(
       backgroundColor: Theme.of(context).highlightColor,
       appBar: SearchBarWidget(),
@@ -107,7 +112,7 @@ class _MovieHomeState extends State<MovieHome> {
             height: 40,
             child: Row(
               children: [
-                Text(name),
+                Text(userDetailsModell.name!),
               ],
             ),
           ),
